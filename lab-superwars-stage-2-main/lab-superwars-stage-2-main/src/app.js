@@ -1,53 +1,42 @@
 const PLAYERS = [
-    "Spiderman",
-    "Captain America",
-    "Wonderwoman",
-    "Popcorn",
-    "Gemwoman",
-    "Bolt",
-    "Antwoman",
-    "Mask",
-    "Tiger",
-    "Captain",
-    "Catwoman",
-    "Fish",
-    "Hulk",
-    "Ninja",
-    "Black Cat",
-    "Volverine",
-    "Thor",
-    "Slayer",
-    "Vader",
-    "Slingo"
+    "Spiderman", "Captain America", "Wonderwoman", "Popcorn", "Gemwoman",
+    "Bolt", "Antwoman", "Mask", "Tiger", "Captain", "Catwoman", "Fish",
+    "Hulk", "Ninja", "Black Cat", "Volverine", "Thor", "Slayer", "Vader", "Slingo"
 ];
 
 // Initialize players with image and strength
 const initPlayers = (players) => {
-    return players.map((player, index) => ({
-        name: player,
-        strength: getRandomStrength(),
-        image: `images/super-${index + 1}.png`, // Fixed image path
-        type: index % 2 === 0 ? 'hero' : 'villain' // Alternating between hero and villain
-    }));
+    let detailedPlayers = [];
+    for (let i = 0; i < players.length; i++) {
+        let player = {};
+        player.name = players[i];
+        player.strength = getRandomStrength();
+        player.image = images/super-${i + 1}.png;
+        player.type = i % 2 === 0 ? 'hero' : 'villain'; // Alternating between hero and villain
+        detailedPlayers.push(player);
+    }
+    return detailedPlayers;
 }
 
 // Getting random strength
 const getRandomStrength = () => {
-    return Math.ceil(Math.random() * 100);
+    return Math.ceil(Math.random() * 100); // Return a random integer (1,100]
 }
 
-// Build player template
 const buildPlayers = (players, type) => {
-    return players
-        .filter(player => player.type === type)
-        .map(player => `
-            <div class="player">
-                <img src="${player.image}">
-                <div class="name">${player.name}</div>
-                <div class="strength">${player.strength}</div>
-            </div>
-        `)
-        .join('');
+    let fragment = '';
+    for (let i = 0; i < players.length; i++) {
+        if (players[i].type === type) {
+            fragment += `
+                <div class="player">
+                    <img src="${players[i].image}">
+                    <div class="name">${players[i].name}</div>
+                    <div class="strength">${players[i].strength}</div>
+                </div>
+            `;
+        }
+    }
+    return fragment;
 }
 
 // Display players in HTML
